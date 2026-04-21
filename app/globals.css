@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+body { @apply bg-background text-foreground font-sans; }
+
+.section { @apply py-16 md:py-24; }
+.container-x { @apply mx-auto max-w-6xl px-4 md:px-6; }
