@@ -9,7 +9,7 @@ create table registrations (
   utm_campaign text,
   status text not null default 'pending' check (status in ('pending','paid','failed')),
   payment_id text,
-  amount integer default 9900,
+  amount integer default 99,
   created_at timestamptz default now(),
   paid_at timestamptz,
   email_sent_at timestamptz

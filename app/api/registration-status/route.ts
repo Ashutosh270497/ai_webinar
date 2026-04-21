@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase";
+import { getSupabaseAdmin } from "@/lib/supabase";
 
 export async function GET(req: NextRequest) {
   const registrationId = req.nextUrl.searchParams.get("registration_id");
   if (!registrationId) return NextResponse.json({ error: "registration_id is required" }, { status: 400 });
+
+  let supabaseAdmin;
+  try {
+    supabaseAdmin = getSupabaseAdmin();
+  } catch {
+    return NextResponse.json({ error: "Supabase is not configured" }, { status: 500 });
+  }
 
   const { data, error } = await supabaseAdmin
     .from("registrations")

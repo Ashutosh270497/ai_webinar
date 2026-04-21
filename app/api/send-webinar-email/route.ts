@@ -1,12 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req: NextRequest) {
   const { name, email } = await req.json();
   const webinarDate = process.env.WEBINAR_DATE || "2026-05-15T19:00:00+05:30";
   const joinLink = process.env.WEBINAR_JOIN_LINK || "";
+  const resendApiKey = process.env.RESEND_API_KEY;
+
+  if (!resendApiKey) {
+    return NextResponse.json({ error: "Resend is not configured" }, { status: 500 });
+  }
+
+  const resend = new Resend(resendApiKey);
 
   const start = new Date(webinarDate);
   const end = new Date(start.getTime() + 2 * 60 * 60 * 1000);
